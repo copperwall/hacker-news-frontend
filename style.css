@@ -2,8 +2,34 @@
    display: none;
 }
 
+a.no_decoration {
+   color: white;
+}
+
+a.no_decoration:visited {
+   color: white;
+}
+
+a.no_decoration:hover {
+   color: white;
+   text-decoration: none;
+}
+
 .item {
    margin: 10px auto;
+}
+
+#main {
+   margin-bottom: 200px;
+}
+
+#content {
+   margin-bottom: 20px;
+}
+
+#scroll_text > p {
+   color: #555;
+   text-align: center;
 }
 
 header {
