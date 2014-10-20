@@ -20,16 +20,20 @@ a.no_decoration:hover {
 }
 
 #main {
-   margin-bottom: 200px;
+   margin-bottom: 150px;
 }
 
 #content {
    margin-bottom: 20px;
 }
 
-#scroll_text > p {
+#scroll_text {
    color: #555;
    text-align: center;
+}
+
+#scroll_text > p {
+   margin-bottom: 0px;
 }
 
 header {
