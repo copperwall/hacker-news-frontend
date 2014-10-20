@@ -1,0 +1,14 @@
+.hidden {
+   display: none;
+}
+
+.item {
+   margin: 10px auto;
+}
+
+header {
+   width:100%;
+   background: #ff6600;
+   color: white;
+   padding-bottom: 14px;
+}

@@ -2,25 +2,8 @@
 <head>
    <title>Better HN</title>
    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' rel='stylesheet'/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-   <style>
-      .hidden {
-         display: none;
-      }
-
-      .entry {
-         margin: 10px auto;
-      }
-
-      header {
-         width:100%;
-         background: #ff6600;
-         color: white;
-         padding-bottom: 14px;
-      }
-   </style>
+   <link href='style.css' rel='stylesheet'/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
       <header>
@@ -35,43 +18,6 @@
 
    <!-- JS -->
    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-   <script>
-      var entryFormat = function(data) {
-         console.log(data);
-         var link = '<a class="lead" href="' + data.url + '" >' + data.title + '</a>';
-         var entryArgs = [
-            '<div class="entry">',
-            link,
-            data.score,
-            ' by ' + data.by,
-            '</div>'
-         ];
-
-         return entryArgs.join(' ');
-      };
-
-      var baseURL = 'https://hacker-news.firebaseio.com/v0';
-
-      var topPostsRequest = $.ajax(baseURL + '/topstories.json');
-
-      topPostsRequest.done(function(topPosts) {
-         var numPosts = 0;
-         topPosts.forEach(function(post) {
-            var postData = $.ajax(baseURL + '/item/' + post + '.json');
-
-            postData.done(function(data) {
-               if (numPosts++ < 20) {
-                  $('#content').append(entryFormat(data));
-                  console.log(numPosts);
-               }
-            });
-         });
-      });
-
-
-      $(document).ajaxStop(function() {
-         $('#content').removeClass('hidden');
-      });
-   </script>
+   <script src='ajax.js'></script>
 </body>
 </html>
