@@ -39,7 +39,7 @@ function getMoreItems(topPosts, offset) {
 }
 
 function entryFormat(data) {
-   var link = '<a class="lead" href="' + data.url + '" >' + data.title + '</a>';
+   var link = '<a class="lead" target="_blank" href="' + data.url + '" >' + data.title + '</a>';
    var comments = data.kids ? data.kids.length : 0;
    var entryArgs = [
       '<div class="item">',
