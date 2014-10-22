@@ -20,7 +20,7 @@ a.no_decoration:hover {
 }
 
 #main {
-   margin-bottom: 150px;
+   margin-bottom: 50px;
 }
 
 #content {
@@ -30,6 +30,7 @@ a.no_decoration:hover {
 #scroll_text {
    color: #555;
    text-align: center;
+   margin: 20px auto;
 }
 
 #scroll_text > p {
