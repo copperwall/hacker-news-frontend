@@ -23,7 +23,7 @@ function getMoreItems(topPosts, offset) {
    });
 
    this.offset += 20;
-   if (offset > 100) {
+   if (this.offset >= 100) {
       $('#scroll_text').hide();
       $(window).unbind('scroll');
    }
