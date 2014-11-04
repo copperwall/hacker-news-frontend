@@ -33,23 +33,29 @@ function getMoreItems(topPosts, offset) {
 /**
  * Throws all parts of an item div into an array and then joins it with spaces.
  */
-function entryFormat(data) {
-   var link = '<a class="lead" target="_blank" href="' + data.url + '" >' + data.title + '</a>';
-   var comments = data.kids ? data.kids.length : 0;
-   var entryArgs = [
-      '<div class="item">',
-      link,
-      '<p>',
-      data.score,
-      'points',
-      ' by ' + data.by,
-      '| ' + comments,
-      'comments',
-      '</p>',
-      '</div>'
-   ];
+function entryFormat(data, full) {
+   var link = '<a class="lead" target="_blank" href="' + data.url + '" >' + data.title + '</a>',
+       comments = data.kids ? data.kids.length : 0,
+       commentLink =  full ? ''
+        : '| <b><span class="comment_link" data-id="' + data.id + '" onclick="viewItem(this)">' + comments + ' comments</span></b>',
+       entryArgs = [
+         '<div class="item_entry">',
+         link,
+         '<p>',
+         data.score,
+         'points',
+         ' by ' + data.by,
+         commentLink,
+         '</p>',
+         '</div>',
+      ];
 
-   return entryArgs.join(' ');
+   var blurb = entryArgs.join(' ');
+   var extra = '<p>' + data.text + '</p>' + '<h3>' + comments + ' comments</h3>';
+
+   if (full)
+      return blurb + extra;
+   return blurb;
 };
 
 $(window).scroll(function() {
