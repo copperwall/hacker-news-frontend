@@ -15,7 +15,14 @@ a.no_decoration:hover {
    text-decoration: none;
 }
 
-.item {
+#back_button {
+   margin-top: 10px;
+   margin-right: 20px;
+   float: left;
+   cursor: pointer;
+}
+
+.item_entry {
    margin: 10px auto;
 }
 
@@ -25,6 +32,19 @@ a.no_decoration:hover {
 
 #content {
    margin-bottom: 20px;
+}
+
+.comment_link {
+   cursor: pointer;
+   /* font-weight: bold; */
+}
+
+#comment_field {
+   margin-top: 20px;
+}
+
+.comment_blurb {
+   margin-bottom: 10px;
 }
 
 #scroll_text {
