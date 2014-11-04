@@ -10,16 +10,33 @@
 <body>
    <header>
       <div class='container'>
+         <i id='back_button' class='fa fa-angle-double-left fa-4x hidden'
+         onclick='backToFrontPage()'></i>
          <a class='no_decoration' href=''><h1>HN</h1></a>
       </div>
    </header>
    <div id='main' class='container'>
-      <div id='content' class='hidden'></div>
-      <div id='scroll_text' class='hidden'>
-         <p class='lead'>Scroll Down For More</p>
-         <i class="fa fa-angle-double-down fa-lg"></i>
+      <div id='front_page'>
+         <div id='content' class='hidden'></div>
+         <div id='scroll_text' class='hidden'>
+            <p class='lead'>Scroll Down For More</p>
+            <i class="fa fa-angle-double-down fa-lg"></i>
+         </div>
+      </div>
+
+      <!-- Template for displaying Items -->
+      <!-- Title, link, post, author, age, score, comments (oh shit) -->
+      <div id='item' class='hidden'>
+         <!-- This could be filled out using entryFormat() -->
+         <div id='item_meta'></div>
+
+         <!-- Comments are appended here -->
+         <div id='comments'></div>
+         <h3 id='comment_number'></h3>
+         <div id='comment_field'></div>
       </div>
    </div>
+
 
    <!-- JS -->
    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
