@@ -1,23 +1,25 @@
-var posts = [];
-var postLimit = 20;
+var itemIds = [];
+var itemList = [];
+var itemLimit = 20;
 var offset = 0;
 var busy = false;
 var scrollThrottle = null;
 var ajaxTimeout = null;
 
 var baseURL = 'https://hacker-news.firebaseio.com/v0';
-var topPostsRequest = $.ajax(baseURL + '/topstories.json');
+var topItemsRequest = $.ajax(baseURL + '/topstories.json');
 
 /**
  * Grabs more items from the top 100 list, with the given offset.
  */
-function getMoreItems(topPosts, offset) {
-   topPosts = topPosts.slice(offset, offset + postLimit);
+function getMoreItems(topItems, offset) {
+   topItems = topItems.slice(offset, offset + itemLimit);
 
-   topPosts.forEach(function(post) {
-      var postData = $.ajax(baseURL + '/item/' + post + '.json');
+   topItems.forEach(function(item) {
+      var itemData = $.ajax(baseURL + '/item/' + item + '.json');
 
-      postData.done(function(data) {
+      itemData.done(function(data) {
+         itemList.push(data);
          $('#content').append(entryFormat(data));
       });
    });
@@ -58,19 +60,62 @@ function entryFormat(data, full) {
    return blurb;
 };
 
+// ITEM SPECIFIC STUFF
+
+// Grab item from id, populate item_fields with information
+// Could grab comments, but that comes later.
+function viewItem(item) {
+   var id = $(item).data('id'),
+       item = itemList.filter(function(item) {return item.id === id;} ).pop(),
+       numComments = item.kids ? item.kids.length : 0;
+
+   $('#item_meta').html(entryFormat(item, /* full */ true));
+   $('#front_page').addClass('hidden');
+   $('#title').addClass('hidden');
+   $('#item').removeClass('hidden');
+   $('#back_button').removeClass('hidden');
+
+   // Use $.when.apply($, objs) to wait for multiple ojects
+   var commentRequests = getTopComments(item);
+}
+
+function getTopComments(item) {
+   var comments = [];
+   var commentids = item.kids;
+
+   $('#comment_field').empty();
+   requests = commentids.map(function(request) {
+      return $.ajax(baseURL + '/item/' + request + '.json');
+   });
+
+   return requests.map(function(request) {
+      request.done(function(comment) {
+         var text = comment.text || '[Deleted]';
+         $('#comment_field').append('<div class="comment_blurb">' + text + '</div><hr/>');
+      });
+   });
+}
+
+function backToFrontPage() {
+   $('#item').addClass('hidden');
+   $('#back_button').addClass('hidden');
+   $('#front_page').removeClass('hidden');
+}
+
+
 $(window).scroll(function() {
    clearTimeout(scrollThrottle);
    scrollThrottle = setTimeout(function() {
       if (!busy && $(window).scrollTop() + $(window).height() == $(document).height()) {
          busy = true;
-         getMoreItems(posts, offset);
+         getMoreItems(itemIds, offset);
       }
    }, 300);
 });
 
-topPostsRequest.done(function(topPosts) {
-   posts = topPosts;
-   getMoreItems(topPosts, offset);
+topItemsRequest.done(function(topItems) {
+   itemIds = topItems;
+   getMoreItems(topItems, offset);
 });
 
 /**
