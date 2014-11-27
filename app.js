@@ -15,12 +15,20 @@ var topItemsRequest = $.ajax(baseURL + '/topstories.json');
 function getMoreItems(topItems, offset) {
    topItems = topItems.slice(offset, offset + itemLimit);
 
-   topItems.forEach(function(item) {
+   var requests = topItems.map(function(item) {
       var itemData = $.ajax(baseURL + '/item/' + item + '.json');
 
-      itemData.done(function(data) {
-         itemList.push(data);
-         $('#content').append(entryFormat(data));
+      return itemData;
+   });
+
+   $.when.apply($, requests).done(function() {
+      var results = Array.prototype.slice.call(arguments, 0).map(function(array) {
+         return array[0];
+      });
+
+      results.forEach(function(result) {
+         itemList.push(result);
+         $('#content').append(entryFormat(result));
       });
    });
 
@@ -88,9 +96,13 @@ function getTopComments(item) {
       return $.ajax(baseURL + '/item/' + request + '.json');
    });
 
-   return requests.map(function(request) {
-      request.done(function(comment) {
-         var text = comment.text || '[Deleted]';
+   $.when.apply($, requests).done(function() {
+      var results = Array.prototype.slice.call(arguments, 0).map(function(array) {
+         return array[0];
+      });
+
+      results.forEach(function(result) {
+         var text = comment.deleted ? '[Deleted]' : comment.text;
          $('#comment_field').append('<div class="comment_blurb">' + text + '</div><hr/>');
       });
    });
