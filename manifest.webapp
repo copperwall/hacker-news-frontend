@@ -1,7 +1,11 @@
 {
-   "name": "Hacker News Frontend",
+   "name": "HN Reader",
    "description": "An alternative for reading Hacker News",
-   "launch_path": "/hntest/index.html",
+   "launch_path": "/hn/index.html",
+   "icons": {
+      "128": "/hn/images/hn_128.png",
+      "512": "/hn/images/hn_512.png"
+   },
    "developer": {
       "name": "Chris Opperwall",
       "url": "https://github.com/copperwall/hacker-news-frontend"
