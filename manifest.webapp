@@ -1,0 +1,9 @@
+{
+   "name": "Hacker News Frontend",
+   "description": "An alternative for reading Hacker News",
+   "launch_path": "/hntest/index.html",
+   "developer": {
+      "name": "Chris Opperwall",
+      "url": "https://github.com/copperwall/hacker-news-frontend"
+   }
+}

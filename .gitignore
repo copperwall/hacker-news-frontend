@@ -1,2 +1,4 @@
 *.sw*
 analytics.js
+# Firefox App
+manifest.webapp
