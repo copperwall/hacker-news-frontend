@@ -88,18 +88,32 @@ function viewItem(item) {
 }
 
 function getTopComments(item) {
-   var comments = [];
    var commentids = item.kids;
 
    $('#comment_field').empty();
+
+   // Return if no comments
+   if (!commentids) {
+      return;
+   }
+
    requests = commentids.map(function(request) {
       return $.ajax(baseURL + '/item/' + request + '.json');
    });
 
    $.when.apply($, requests).done(function() {
-      var results = Array.prototype.slice.call(arguments, 0).map(function(array) {
-         return array[0];
-      });
+      var comments = Array.prototype.slice.call(arguments);
+      var results = [];
+
+      // When there is only one comment, the second value is a string, not an
+      // array.
+      if (typeof comments[1] === "string") {
+         results = [comments[0]];
+      } else {
+         results = comments.map(function(comment) {
+            return comment[0];
+         });
+      }
 
       results.forEach(function(comment) {
          var text = comment.deleted ? '[Deleted]' : comment.text;
