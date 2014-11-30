@@ -103,7 +103,10 @@ function getTopComments(item) {
 
       results.forEach(function(comment) {
          var text = comment.deleted ? '[Deleted]' : comment.text;
-         $('#comment_field').append('<div class="comment_blurb">' + text + '</div><hr/>');
+         var by = '<strong>' + comment.by + '</strong>';
+         var time = '<span class="time_since">' + getDateSincePost(comment.time) + '</span>';
+         var element = '<div class="comment_blurb"><p>' + by + time + '<p>' + text + '</p></div>';
+         $('#comment_field').append(element);
       });
    });
 }
@@ -114,6 +117,25 @@ function backToFrontPage() {
    $('#front_page').removeClass('hidden');
 }
 
+/**
+ * Display time difference in days, hours, or minutes.
+ */
+function getDateSincePost(postDate) {
+   var timeSince = (Date.now() / 1000) - postDate;
+   var days = Math.floor(timeSince / (60 * 60 * 24));
+
+   if (days)
+      return days + " days ago";
+
+   var hours = Math.floor(timeSince / (60 * 60));
+
+   if (hours)
+      return hours + " hours ago";
+
+   var minutes = Math.floor(timeSince / 60);
+
+   return minutes + " minutes ago";
+}
 
 $(window).scroll(function() {
    clearTimeout(scrollThrottle);

@@ -45,6 +45,17 @@ a.no_decoration:hover {
 
 .comment_blurb {
    margin-bottom: 10px;
+   border-bottom: 1px solid #ccc;
+}
+
+.comment_blurb:last-of-type {
+   border-bottom: none;
+}
+
+.time_since {
+   padding-left: 10px;
+   font-size: 12px;
+   color: #666;   /* brutal */
 }
 
 #scroll_text {
