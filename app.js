@@ -6,6 +6,9 @@ var busy = false;
 var scrollThrottle = null;
 var ajaxTimeout = null;
 
+// Can be list, post, or user.
+var pageType = 'list';
+
 var baseURL = 'https://hacker-news.firebaseio.com/v0';
 var topItemsRequest = $.ajax(baseURL + '/topstories.json');
 
@@ -82,6 +85,7 @@ function viewItem(item) {
    $('#title').addClass('hidden');
    $('#item').removeClass('hidden');
    $('#back_button').removeClass('hidden');
+   pageType = 'post';
 
    // Use $.when.apply($, objs) to wait for multiple ojects
    var commentRequests = getTopComments(item);
@@ -129,6 +133,7 @@ function backToFrontPage() {
    $('#item').addClass('hidden');
    $('#back_button').addClass('hidden');
    $('#front_page').removeClass('hidden');
+   pageType = 'list';
 }
 
 /**
@@ -154,9 +159,11 @@ function getDateSincePost(postDate) {
 $(window).scroll(function() {
    clearTimeout(scrollThrottle);
    scrollThrottle = setTimeout(function() {
-      if (!busy && $(window).scrollTop() + $(window).height() == $(document).height()) {
-         busy = true;
-         getMoreItems(itemIds, offset);
+      if (pageType === 'list') {
+         if (!busy && $(window).scrollTop() + $(window).height() == $(document).height()) {
+            busy = true;
+            getMoreItems(itemIds, offset);
+         }
       }
    }, 300);
 });
