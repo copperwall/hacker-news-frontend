@@ -121,7 +121,7 @@ function getTopComments(item) {
 
       results.forEach(function(comment) {
          var text = comment.deleted ? '[Deleted]' : comment.text;
-         var by = '<strong>' + comment.by + '</strong>';
+         var by = '<strong>' + (comment.deleted ? '[Deleted]' : comment.by) + '</strong>';
          var time = '<span class="time_since">' + getDateSincePost(comment.time) + '</span>';
          var element = '<div class="comment_blurb"><p>' + by + time + '<p>' + text + '</p></div>';
          $('#comment_field').append(element);
