@@ -80,6 +80,7 @@ function viewItem(item) {
        item = itemList.filter(function(item) {return item.id === id;} ).pop(),
        numComments = item.kids ? item.kids.length : 0;
 
+   history.pushState({}, "", "comments/" + id);
    $('#item_meta').html(entryFormat(item, /* full */ true));
    $('#front_page').addClass('hidden');
    $('#title').addClass('hidden');
@@ -130,6 +131,7 @@ function getTopComments(item) {
 }
 
 function backToFrontPage() {
+   history.back();
    $('#item').addClass('hidden');
    $('#back_button').addClass('hidden');
    $('#front_page').removeClass('hidden');
